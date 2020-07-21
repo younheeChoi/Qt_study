@@ -3,20 +3,11 @@ import sys
 from PySide2.QtCharts import *
 from PySide2.QtGui import *
 from PySide2.QtCore import *
-import pandas as pd
-
-
-# DATA
-# cyh = pd.read_csv('YHdata.csv')
-# sample = cyh.loc[:,'ZINST1']
-# print('sample')
-
 
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('test')
-        # self.setGeometry(100, 100, 400, 400)
         self.NewLinechart()
         self.show()
 
@@ -36,7 +27,7 @@ class Window(QMainWindow):
         # chart 제목 상단
         self.chart_.setTitle('chart제목')
 
-        # chart grid 넣기(point순서가 아닌(순서연결은 되있음)) -> x,y (0,0)이 고정되지 않음
+        # chart grid 넣기(point순서가 아닌(순서연결은 되어있음)) -> x,y (0,0)이 고정되지 않음 -> 수정 예정
         self.chart_.createDefaultAxes()
 
         # chart 배경색 바꾸기, Qcolor 이용 -> RGB로도 변경가능한지 확인 예정
@@ -47,4 +38,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     # class 이름 으로 찾기
     myWindow = Window()
+    # 코드 실행시 창 보여주는 크기
+    myWindow.resize(500,500)
     app.exec_()
