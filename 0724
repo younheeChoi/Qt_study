@@ -1,0 +1,107 @@
+from PySide2.QtWidgets import *
+import sys
+from PySide2.QtCharts import *
+from PySide2.QtGui import *
+from PySide2.QtCore import *
+
+
+class Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('test')
+        self.NewLinechart()
+        self.chart_view.setChart(self.chart_)
+
+        # TODO- 버튼연결해서 클릭후 저장으로 변경해보기.
+        # chart 그린거 저장하는 법_ 버튼 클릭시 그림 저장으로 시도해보기
+        # self.chart_view.grab().toImage().save("저장할파일명.png")
+        self.show()
+
+    def NewLinechart(self):
+        self.chart_view = QtCharts.QChartView()
+        self.setCentralWidget(self.chart_view)
+        self.chart_ = QtCharts.QChart()
+
+        # # DATA # #
+        # line1
+        data1 = QtCharts.QLineSeries()
+        #TODO
+        # 데이터 범례 이름 넣기 -> 박스안에 배치해서 세로로 배열도 가능한지 확인하기
+        data1.setName('data1')
+        data1.append(0, 0)
+        data1.append(1.5, 1)
+        data1.append(2.8, 5)
+        data1.append(3, 3)
+        self.chart_.addSeries(data1)
+
+        # line2
+        data2 = QtCharts.QLineSeries()
+        # 데이터 범례 이름 넣기
+        data2.setName('data2')
+        data2.append(0,1)
+        data2.append(1,1)
+        data2.append(2,2)
+        data2.append(3,3)
+        data2.append(4,4)
+        self.chart_.addSeries(data2)
+
+
+        # # Chart Style # #
+        # chart line 색 바꾸기_ setColor사용
+        data2.setColor('red')
+        # chart line 색 바꾸기_ setColor사용-> RGB경우
+        data1.setColor(QColor.fromRgb(255,0,128, 255))
+
+        # chart 배경색 바꾸기, Qcolor 이용
+        # self.chart_.setBackgroundBrush(QColor('black'))
+        # chart 배경색 바꾸기, Qcolor 이용 -> RGB경우, QColor.fromRgb(r,g,b,투명도)
+        self.chart_.setBackgroundBrush(QColor.fromRgb(0, 0, 0,0))
+
+        # chart grid 넣기
+        self.chart_.createDefaultAxes()
+
+        # 범례 위치 -> 차트명.lengen().setAlignment(Qt.Align위치)
+        self.chart_.legend().setAlignment(Qt.AlignRight)
+        self.chart_.legend().setAlignment(Qt.AlignBottom)
+
+        #TODO
+        # chart line 유형바꾸기(실선, 점선, 선굵기)
+
+        # chart 제목 달기
+        self.chart_.setTitle('chart제목')
+
+        # # x,y 서식_ 범례 밑에 위치 할 것 # #
+        # x축 설정
+        axisX = QtCharts.QValueAxis()
+        # 값의 최대 최소 값 지정 -> 데이터가 이미 값이 지정되어있다면 그에 맞는 최대 최소로 자동변경됨
+        axisX.setRange(-1,4)
+        # 축 간격-> 값이 표시되는정도
+        axisX.setTickCount(5)
+
+        # Y축 설정
+        axisY = QtCharts.QValueAxis()
+        axisY.setRange(-1, 4)
+        axisY.setTickCount(5)
+
+        # # x,y축 이름 붙이기
+        self.chart_.axisX().setTitleText('Xlabel')
+        self.chart_.axisY().setTitleText('Ylabel')
+
+
+# class 생성한거 창으로 띄워주는것
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    # class 이름 으로 찾기
+    myWindow = Window()
+    myWindow.resize(500,500)
+    app.exec_()
+
+
+
+
+
+
+
+
+
+
